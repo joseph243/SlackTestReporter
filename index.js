@@ -13,23 +13,33 @@ try {
     //begin joev
 
   const dirnameString = __dirname;
-  const testString = 'D:/a/_actions/joseph243/SlackTestReporter/v0.31';
-  const testString2 = 'D:/a/campus_test_suite/campus_test_suite/build/test-results/test';
+  console.log('working directory: ' + dirnameString);
 
   const rootDir = dirnameString.split('_actions')[0];
-  const outputDir = '/campus_test_suite/campus_test_suite/build/test-results/test';
-
-  console.log('working directory: ' + __dirname);
   console.log('root directory: ' + rootDir);
-  console.log('test directory: ' + rootDir + outputDir);
+
+  const outputDir = core.getInput('testOutputPath');
+  const testDir = rootDir + outputDir;
+  console.log('test directory: ' + testDir);
 
   var fs = require('fs');
-
   console.log('reading contents of test directory: ')
-    fs.readdir(rootDir + outputDir, function (err, data) {
+    fs.readdir(testDir, function (err, data) {
+        //error handling or lack of it:        
         if (err) throw err;
+
+        //list files:
         console.log(data);
+
+        data.forEach(function (file) {
+            // per file actions here
+            var convert = require('xml-js');
+            var xml = require('fs').readFileSync(file, 'utf8');
+            var options = {ignoreComment: true, alwaysChildren: true};
+            var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
+            console.log(content);
         });
+    });
 
   // Get the JSON webhook payload for the event that triggered the workflow:
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
