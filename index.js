@@ -25,9 +25,21 @@ try {
   var fs = require('fs');
   console.log('reading contents of test directory: ')
     fs.readdir(testDir, function (err, data) {
+        //error handling or lack of it:        
         if (err) throw err;
+
+        //list files:
         console.log(data);
+
+        data.forEach(function (file) {
+            // per file actions here
+            var convert = require('xml-js');
+            var xml = require('fs').readFileSync(file, 'utf8');
+            var options = {ignoreComment: true, alwaysChildren: true};
+            var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
+            console.log(content);
         });
+    });
 
   // Get the JSON webhook payload for the event that triggered the workflow:
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
