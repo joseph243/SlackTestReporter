@@ -31,11 +31,11 @@ try {
         //list files:
         console.log(data);
 
-        data.forEach(function (file) {
+        data.forEach(function (fileName) {
             // per file actions here, include only TEST files.
-            if (file.includes('TEST')) {
+            if (fileName.includes('TEST')) {
                 var convert = require('xml-js');
-                var xml = require('fs').readFileSync(file, 'utf8');
+                var xml = require('fs').readFileSync(testDir + '/' + fileName, 'utf8');
                 var options = {ignoreComment: true, alwaysChildren: true};
                 var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
                 console.log(content);
