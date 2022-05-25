@@ -32,12 +32,14 @@ try {
         console.log(data);
 
         data.forEach(function (file) {
-            // per file actions here
-            var convert = require('xml-js');
-            var xml = require('fs').readFileSync(file, 'utf8');
-            var options = {ignoreComment: true, alwaysChildren: true};
-            var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
-            console.log(content);
+            // per file actions here, include only TEST files.
+            if (file.includes('TEST')) {
+                var convert = require('xml-js');
+                var xml = require('fs').readFileSync(file, 'utf8');
+                var options = {ignoreComment: true, alwaysChildren: true};
+                var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
+                console.log(content);
+                }
         });
     });
 
