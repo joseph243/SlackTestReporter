@@ -17,7 +17,7 @@ try {
   const testString2 = 'D:/a/campus_test_suite/campus_test_suite/build/test-results/test';
 
   const rootDir = dirnameString.split('_actions')[0];
-  const outputDir = '/campus_test_suite/campus_test_suite/build/test-results/test';
+  const outputDir = 'campus_test_suite/campus_test_suite/build/test-results/test';
 
   console.log('working directory: ' + __dirname);
   console.log('root directory: ' + rootDir);
