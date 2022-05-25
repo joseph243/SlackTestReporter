@@ -8,17 +8,25 @@ try {
 
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
+    //end demo stuff
 
-  console.log('dirname value: ' + __dirname);
+    //begin joev
+
+  const dirnameString = __dirname;
+  const testString = 'D:/a/_actions/joseph243/SlackTestReporter/v0.31';
+  const testString2 = 'D:/a/campus_test_suite/campus_test_suite/build/test-results/test';
+
+  const rootDir = dirnameString.split('_actions')[0];
+  const outputDir = '/campus_test_suite/campus_test_suite/build/test-results/test';
+
+  console.log('working directory: ' + __dirname);
+  console.log('root directory: ' + rootDir);
+  console.log('test directory: ' + rootDir + outputDir);
 
   var fs = require('fs');
-  const result = fs.readdir(__dirname, function (err, data) {
-    if (err) throw err;
-    console.log(data);
-    });
 
-
-    fs.readdir('C:/', function (err, data) {
+  console.log('reading contents of test directory: ')
+    fs.readdir(rootDir + outputDir, function (err, data) {
         if (err) throw err;
         console.log(data);
         });
