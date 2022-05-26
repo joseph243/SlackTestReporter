@@ -49,6 +49,28 @@ try {
         });
     });
 
+
+  // SLACK STUFF
+  //required action parameters:
+  const slackToken = core.getInput('slackToken');
+  const slackChannelId = core.getInput('slackChannelId');
+
+  const { WebClient } = require('@slack/web-api');
+
+  const web = new WebClient(slackToken);
+
+(async () => {
+  // See: https://api.slack.com/methods/chat.postMessage
+  const res = await web.chat.postMessage({ channel: slackChannelId, text: 'ROBOT SPEAKS! :fire: :robot:' });
+
+  // `res` contains information about the posted message
+  console.log('Message sent: ', res.ts);
+})();
+
+
+
+
+
   // Get the JSON webhook payload for the event that triggered the workflow:
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
   //console.log(`The event payload: ${payload}`);

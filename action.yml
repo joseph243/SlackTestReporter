@@ -9,6 +9,14 @@ inputs:
     description: 'Test Output Path'
     required: true
     default: 'invalid'
+  slackChannelId:
+    description: 'Slack Conversation ID ie: C12355667'
+    required: true
+    default: 'invalid'
+  slackToken:
+    description: 'Secret Slack Token'
+    required: true
+    default: 'invalid'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
