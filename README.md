@@ -8,15 +8,6 @@ each parameter is required.
 
 
 ===================================
-on:
-  push:
-    branches: [ main ]
-    
-jobs:
-    
-  test:
-    name: Test Runner
-    runs-on: windows-latest
 
     steps:
     
@@ -30,4 +21,5 @@ jobs:
         testOutputPath: 'repository/repository/build/test-results/test'
         slackToken: 'xoxb-BOTTOKENRECOMMENDED24234322354235243'
         slackChannelId: 'C01234567'
+        
 ===================================
