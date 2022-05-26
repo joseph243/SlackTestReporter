@@ -25,7 +25,7 @@ try {
   var fs = require('fs');
   console.log('reading contents of test directory: ')
 
-  let OUTPUTSTR = '';
+  let OUTPUTSTR = ".";
 
     fs.readdir(testDir, function (err, data) {
         //error handling or lack of it:        
