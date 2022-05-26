@@ -34,12 +34,18 @@ try {
         data.forEach(function (fileName) {
             // per file actions here, include only TEST files.
             if (fileName.includes('TEST')) {
+                //grab file and populate content to JS object
                 var convert = require('xml-js');
                 var xml = require('fs').readFileSync(testDir + '/' + fileName, 'utf8');
                 var options = {ignoreComment: true, alwaysChildren: true};
                 var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
-                console.log(content);
-                }
+
+                //view and output attributes.
+                console.log("TEST GROUP: " + content.elements[0].attributes.name);
+                console.log("tests: " + content.elements[0].attributes.tests);
+                console.log("skips: " + content.elements[0].attributes.skipped);
+                console.log("fails: " + content.elements[0].attributes.failures);
+                console.log("error: " + content.elements[0].attributes.errors);                }
         });
     });
 
