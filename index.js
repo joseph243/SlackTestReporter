@@ -53,6 +53,7 @@ try {
                      for (let i = 0; i < parseInt(content.elements[0].attributes.tests); i++) {
                       SHORTOUTPUT += " :green_apple:";
                       }
+                      SHORTOUTPUT += "\r\n";
                      slackBot(SHORTOUTPUT);
                    }
                 else {
