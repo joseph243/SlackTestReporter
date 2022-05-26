@@ -24,6 +24,9 @@ try {
 
   var fs = require('fs');
   console.log('reading contents of test directory: ')
+
+  let OUTPUTSTR = '';
+
     fs.readdir(testDir, function (err, data) {
         //error handling or lack of it:        
         if (err) throw err;
@@ -41,11 +44,26 @@ try {
                 var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
 
                 //view and output attributes.
-                console.log("TEST GROUP: " + content.elements[0].attributes.name);
-                console.log("tests: " + content.elements[0].attributes.tests);
-                console.log("skips: " + content.elements[0].attributes.skipped);
-                console.log("fails: " + content.elements[0].attributes.failures);
-                console.log("error: " + content.elements[0].attributes.errors);                }
+
+                OUTPUTSTR += ("TEST GROUP: " + content.elements[0].attributes.name);
+
+                OUTPUTSTR += "\r\n";
+                OUTPUTSTR += " \ ";
+
+                OUTPUTSTR += ("TESTS / SKIPPED / FAILED / ERRORS");
+
+                OUTPUTSTR += "\r\n";
+                OUTPUTSTR += " \ ";
+
+                OUTPUTSTR += (content.elements[0].attributes.tests + " / ");
+                OUTPUTSTR += (content.elements[0].attributes.skipped + " / ");
+                OUTPUTSTR += (content.elements[0].attributes.failures + " / ");
+                OUTPUTSTR += (content.elements[0].attributes.errors + " / ");
+                
+                OUTPUTSTR += "\r\n";
+                OUTPUTSTR += " \ ";
+            }
+
         });
     });
 
@@ -61,7 +79,7 @@ try {
 
 (async () => {
   // See: https://api.slack.com/methods/chat.postMessage
-  const res = await web.chat.postMessage({ channel: slackChannelId, text: 'ROBOT SPEAKS! :fire: :robot:' });
+  const res = await web.chat.postMessage({ channel: slackChannelId, text: OUTPUTSTR });
 
   // `res` contains information about the posted message
   console.log('Message sent: ', res.ts);
