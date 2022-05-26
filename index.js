@@ -45,18 +45,24 @@ try {
 
                 //view and output attributes.
 
-                OUTPUTSTR += ("TEST GROUP: " + content.elements[0].attributes.name);
+                console.log("building string for " + content.elements[0].attributes.name);
+                OUTPUTSTR += "TEST SET: ";
+                OUTPUTSTR += content.elements[0].attributes.name;
 
                 OUTPUTSTR += "\r\n";
 
-                OUTPUTSTR += ("TESTS / SKIPPED / FAILED / ERRORS");
+                OUTPUTSTR += "TESTS / SKIPPED / FAILED / ERRORS";
 
                 OUTPUTSTR += "\r\n";
 
-                OUTPUTSTR += (content.elements[0].attributes.tests + " / ");
-                OUTPUTSTR += (content.elements[0].attributes.skipped + " / ");
-                OUTPUTSTR += (content.elements[0].attributes.failures + " / ");
-                OUTPUTSTR += (content.elements[0].attributes.errors + " / ");
+                OUTPUTSTR += content.elements[0].attributes.tests; 
+                OUTPUTSTR += " / ";
+                OUTPUTSTR += content.elements[0].attributes.skipped;
+                OUTPUTSTR += " / ";
+                OUTPUTSTR += content.elements[0].attributes.failures;
+                OUTPUTSTR += " / ";
+                OUTPUTSTR += content.elements[0].attributes.errors;
+                OUTPUTSTR += " / ";
                 
                 OUTPUTSTR += "\r\n";
             }
