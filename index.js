@@ -43,10 +43,25 @@ try {
 
                 //view and output attributes.
 
-                console.log("building string for " + content.elements[0].attributes.name);
+                console.log("calculating test results, deciding if abbreviate output");
+                if ( parseInt(content.elements[0].attributes.skipped) == 0 &&
+                     parseInt(content.elements[0].attributes.failures) == 0 &&
+                     parseInt(content.elements[0].attributes.errors) == 0
+                   ) {
+                     console.log("building abbreviated string for " + content.elements[0].attributes.name);
+                     let SHORTOUTPUT = "" + content.elements[0].attributes.name + " ALL PASSED:";
+                     for (let i = 0; i < parseInt(content.elements[0].attributes.tests); i++) {
+                      SHORTOUTPUT += " :green_apple:";
+                      }
+                     slackBot(SHORTOUTPUT);
+                   }
+                else {
+
+                console.log("building long string for failed test: " + content.elements[0].attributes.name);
                 let OUTPUTSTR = "";
                 OUTPUTSTR += "TEST SET: ";
                 OUTPUTSTR += content.elements[0].attributes.name;
+                OUTPUTSTR += ":apple:";
 
                 OUTPUTSTR += "\r\n";
 
@@ -61,16 +76,11 @@ try {
                 OUTPUTSTR += content.elements[0].attributes.failures;
                 OUTPUTSTR += " / ";
                 OUTPUTSTR += content.elements[0].attributes.errors;
-                OUTPUTSTR += " / ";
                 
                 OUTPUTSTR += "\r\n";
 
-                console.log("Prepared message is: ");
-                console.log("===============================================================");
-                console.log(OUTPUTSTR);
-                console.log("===============================================================");
                 slackBot(OUTPUTSTR);
-              
+                }
             }
 
         });
@@ -83,6 +93,11 @@ try {
   //required action parameters:
 
   function slackBot(inString) {
+    console.log("Prepared message is: ");
+    console.log("===============================================================");
+    console.log(inString);
+    console.log("===============================================================");
+
     const slackToken = core.getInput('slackToken');
     const slackChannelId = core.getInput('slackChannelId');
   
@@ -99,7 +114,6 @@ try {
   })();
 
   }
-
 
 
 
