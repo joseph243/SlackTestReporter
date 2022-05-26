@@ -25,8 +25,6 @@ try {
   var fs = require('fs');
   console.log('reading contents of test directory: ')
 
-  let OUTPUTSTR = ".";
-
     fs.readdir(testDir, function (err, data) {
         //error handling or lack of it:        
         if (err) throw err;
@@ -46,6 +44,7 @@ try {
                 //view and output attributes.
 
                 console.log("building string for " + content.elements[0].attributes.name);
+                let OUTPUTSTR = "";
                 OUTPUTSTR += "TEST SET: ";
                 OUTPUTSTR += content.elements[0].attributes.name;
 
