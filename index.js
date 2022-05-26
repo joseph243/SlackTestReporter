@@ -48,12 +48,10 @@ try {
                 OUTPUTSTR += ("TEST GROUP: " + content.elements[0].attributes.name);
 
                 OUTPUTSTR += "\r\n";
-                OUTPUTSTR += " \ ";
 
                 OUTPUTSTR += ("TESTS / SKIPPED / FAILED / ERRORS");
 
                 OUTPUTSTR += "\r\n";
-                OUTPUTSTR += " \ ";
 
                 OUTPUTSTR += (content.elements[0].attributes.tests + " / ");
                 OUTPUTSTR += (content.elements[0].attributes.skipped + " / ");
@@ -61,7 +59,6 @@ try {
                 OUTPUTSTR += (content.elements[0].attributes.errors + " / ");
                 
                 OUTPUTSTR += "\r\n";
-                OUTPUTSTR += " \ ";
             }
 
         });
@@ -69,6 +66,10 @@ try {
 
 
   // SLACK STUFF
+  console.log("Prepared message is: ");
+  console.log("===============================================================");
+  console.log(OUTPUTSTR);
+  console.log("===============================================================");
   //required action parameters:
   const slackToken = core.getInput('slackToken');
   const slackChannelId = core.getInput('slackChannelId');
