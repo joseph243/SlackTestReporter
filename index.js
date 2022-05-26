@@ -65,6 +65,13 @@ try {
                 OUTPUTSTR += " / ";
                 
                 OUTPUTSTR += "\r\n";
+
+                console.log("Prepared message is: ");
+                console.log("===============================================================");
+                console.log(OUTPUTSTR);
+                console.log("===============================================================");
+                slackBot(OUTPUTSTR);
+              
             }
 
         });
@@ -72,25 +79,28 @@ try {
 
 
   // SLACK STUFF
-  console.log("Prepared message is: ");
-  console.log("===============================================================");
-  console.log(OUTPUTSTR);
-  console.log("===============================================================");
+
+
   //required action parameters:
-  const slackToken = core.getInput('slackToken');
-  const slackChannelId = core.getInput('slackChannelId');
 
-  const { WebClient } = require('@slack/web-api');
+  function slackBot(inString) {
+    const slackToken = core.getInput('slackToken');
+    const slackChannelId = core.getInput('slackChannelId');
+  
+    const { WebClient } = require('@slack/web-api');
+  
+    const web = new WebClient(slackToken);
+  
+  (async () => {
+    // See: https://api.slack.com/methods/chat.postMessage
+    const res = await web.chat.postMessage({ channel: slackChannelId, text: inString });
+  
+    // `res` contains information about the posted message
+    return ('Message sent: ', res.ts);
+  })();
 
-  const web = new WebClient(slackToken);
+  }
 
-(async () => {
-  // See: https://api.slack.com/methods/chat.postMessage
-  const res = await web.chat.postMessage({ channel: slackChannelId, text: OUTPUTSTR });
-
-  // `res` contains information about the posted message
-  console.log('Message sent: ', res.ts);
-})();
 
 
 
