@@ -6,23 +6,21 @@ branding:
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
-    required: true
-    default: 'World'
+    required: false
   testOutputPath: 
     description: 'Test Output Path'
     required: true
-    default: 'invalid'
+    default: 'missing test XML path from yml configuration'
   slackChannelId:
     description: 'Slack Conversation ID ie: C12355667'
     required: true
-    default: 'invalid'
+    default: 'missing slack channel ID from yml configuration'
   slackToken:
     description: 'Secret Slack Token'
     required: true
-    default: 'invalid'
+    default: 'missing slack token from yml configuration'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  #none
 runs:
   using: 'node16'
   main: 'index.js'
