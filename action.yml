@@ -19,7 +19,7 @@ inputs:
     description: 'Secret Slack Token'
     required: true
     default: 'missing slack token from yml configuration'
-outputs:
+#outputs:
   #none
 runs:
   using: 'node16'
