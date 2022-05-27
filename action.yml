@@ -1,5 +1,8 @@
 name: 'JUnit to Slack Test Reporter'
 description: 'Detailed JUnit Test Report sent to a Slack channel'
+branding:
+  icon: 'file-text'  
+  color: 'green'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
