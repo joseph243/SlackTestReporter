@@ -11,13 +11,13 @@ each parameter is required.
 
     steps:
     
-    - MY JUNIT TEST SUITE
+    - [JUNIT TEST SUITE STEPS]
     
     - name: Test Report - Slack
       id: hello
-      uses: joseph243/SlackTestReporter@v0.95
+      uses: joseph243/SlackTestReporter@v1.0
       with:
-        who-to-greet: 'Slack and Junit Tester'
+        who-to-greet: 'Tester'
         testOutputPath: 'repository/repository/build/test-results/test'
         slackToken: 'xoxb-BOTTOKENRECOMMENDED24234322354235243'
         slackChannelId: 'C01234567'
