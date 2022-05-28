@@ -64,20 +64,30 @@ try {
         else {
            console.log("building long string for failed test: " + content.elements[0].attributes.name);
            let OUTPUTSTR = "";
-           OUTPUTSTR += ":apple: FAILURES: ";
            OUTPUTSTR += content.elements[0].attributes.name;
-           OUTPUTSTR += ":apple:";
+           OUTPUTSTR += " HAS ERRORS:";
            OUTPUTSTR += "\r\n";
-           OUTPUTSTR += "TESTS / SKIPPED / FAILED / ERRORS";
-           OUTPUTSTR += "\r\n";
-           OUTPUTSTR += content.elements[0].attributes.tests; 
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.skipped;
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.failures;
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.errors;
-           OUTPUTSTR += "\r\n";
+
+           //begin test case details
+           const testcases = content.elements[0].elements;
+           testcases.forEach(function (item) {
+           if (item.name == "testcase") {
+             var testCaseNameResult = item.attributes.name;
+             testCaseNameResult += getTestCaseResult(item);
+             if (testCaseNameResult.includes('skipped')){
+                testCaseNameResult = ':pineapple: ' + testCaseNameResult;
+              }
+             else if (testCaseNameResult.includes('failure')){
+                testCaseNameResult = ':apple: ' + testCaseNameResult;
+              }
+             else {
+                testCaseNameResult = ':green_apple: ' + testCaseNameResult;
+              }
+             testCaseNameResult = "    " + testCaseNameResult;
+             testCaseNameResult += "\r\n";
+             OUTPUTSTR += testCaseNameResult;
+            }
+    });
            slackBot(OUTPUTSTR);
         }
       }
@@ -85,24 +95,29 @@ try {
     });
   });
 
+  //function for interpret xml test case:
+  function getTestCaseResult(inXML) {
+    var outStr = '';
+    inXML.elements.forEach(function (result) {
+      outStr += ' ';
+      outStr += result.name;
+    });
+    return outStr;
+  }
+
   //function for send text to slack: 
   function slackBot(inString) {
     console.log("Sending to Slack: ");
     console.log("===============================================================");
     console.log(inString);
     console.log("===============================================================");
-  (async () => {
-    // See: https://api.slack.com/methods/chat.postMessage
-    const res = await web.chat.postMessage({ channel: slackChannelId, text: inString });
-    // `res` contains information about the posted message
-    return ('Message sent: ', res.ts);
-  })();
-
+    (async () => {
+      // See: https://api.slack.com/methods/chat.postMessage
+      const res = await web.chat.postMessage({ channel: slackChannelId, text: inString });
+      // `res` contains information about the posted message
+      return ('Message sent: ', res.ts);
+    })();
   }
-
-
-
-
 
   // Get the JSON webhook payload for the event that triggered the workflow:
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
