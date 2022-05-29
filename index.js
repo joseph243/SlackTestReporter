@@ -9,6 +9,7 @@ try {
     //end demo stuff
 
   const dirnameString = __dirname;
+  const tempdirnameString = 'C:/Users/Joseph/eclipse-workspace/campus_test_suite/build/test-results/test';
   console.log('working directory: ' + dirnameString);
 
   const rootDir = dirnameString.split('_actions')[0];
@@ -31,6 +32,7 @@ try {
 
   //read file system and handle data:
   console.log('reading contents of test directory... ');
+  //TEST ONLY:  fs.readdir(tempdirnameString, function (err, data) {
   fs.readdir(testDir, function (err, data) {
     //error handling or lack of it:        
     if (err) throw err;
@@ -43,6 +45,7 @@ try {
       if (fileName.includes('TEST')) {
         //grab file and populate content to JS object:
         var convert = require('xml-js');
+        //TEST ONLY:  var xml = require('fs').readFileSync(tempdirnameString + '/' + fileName, 'utf8'); 
         var xml = require('fs').readFileSync(testDir + '/' + fileName, 'utf8');
         var options = {ignoreComment: true, alwaysChildren: true};
         var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
@@ -78,7 +81,8 @@ try {
                 testCaseNameResult = ':pineapple: ' + testCaseNameResult;
               }
              else if (testCaseNameResult.includes('failure')){
-                testCaseNameResult = ':apple: ' + testCaseNameResult;
+                testCaseNameResult = ':apple: ' + testCaseNameResult + ' ' 
+                  + item.elements[0].attributes.message;
               }
              else {
                 testCaseNameResult = ':green_apple: ' + testCaseNameResult;
