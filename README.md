@@ -1,13 +1,20 @@
 # SlackTestReporter
-Git Action:  Test Results to Slack
+
+Send the results of your JUnit test suite into a Slack message.  Simple test output for non-technical audience.
 
 
 Required Parameters:
+
     testOutputPath (folder location of the JUnit XML Results)
+    
     slackToken (Slack Bot-Type Token with "write" permission)
+    
     slackChannelId (Slack Channel ID)
+    
 Optional Parameters:
+
     who-to-greet (name of person to greet at beginning of Slack message)
+    
 
 
 EXAMPLE IMPLEMENTATION:
