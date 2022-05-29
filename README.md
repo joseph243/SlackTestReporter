@@ -2,11 +2,15 @@
 Git Action:  Test Results to Slack
 
 
+Required Parameters:
+    testOutputPath (folder location of the JUnit XML Results)
+    slackToken (Slack Bot-Type Token with "write" permission)
+    slackChannelId (Slack Channel ID)
+Optional Parameters:
+    who-to-greet (name of person to greet at beginning of Slack message)
+
+
 EXAMPLE IMPLEMENTATION:
-each parameter is required.
-
-
-
 ===================================
 
     steps:
@@ -24,4 +28,4 @@ each parameter is required.
         
 ===================================
 
-![image](https://user-images.githubusercontent.com/29494997/170576710-cf25159a-9936-4b18-aad9-dcdafdafd87c.png)
+![image](https://user-images.githubusercontent.com/29494997/170848566-552809c0-0a0a-4c4b-ab01-59503decdadc.png)
