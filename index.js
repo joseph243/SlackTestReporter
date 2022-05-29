@@ -9,6 +9,7 @@ try {
     //end demo stuff
 
   const dirnameString = __dirname;
+  const tempdirnameString = 'C:/Users/Joseph/eclipse-workspace/campus_test_suite/build/test-results/test';
   console.log('working directory: ' + dirnameString);
 
   const rootDir = dirnameString.split('_actions')[0];
@@ -31,6 +32,7 @@ try {
 
   //read file system and handle data:
   console.log('reading contents of test directory... ');
+  //TEST ONLY:  fs.readdir(tempdirnameString, function (err, data) {
   fs.readdir(testDir, function (err, data) {
     //error handling or lack of it:        
     if (err) throw err;
@@ -43,6 +45,7 @@ try {
       if (fileName.includes('TEST')) {
         //grab file and populate content to JS object:
         var convert = require('xml-js');
+        //TEST ONLY:  var xml = require('fs').readFileSync(tempdirnameString + '/' + fileName, 'utf8'); 
         var xml = require('fs').readFileSync(testDir + '/' + fileName, 'utf8');
         var options = {ignoreComment: true, alwaysChildren: true};
         var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
@@ -64,20 +67,31 @@ try {
         else {
            console.log("building long string for failed test: " + content.elements[0].attributes.name);
            let OUTPUTSTR = "";
-           OUTPUTSTR += ":apple: FAILURES: ";
            OUTPUTSTR += content.elements[0].attributes.name;
-           OUTPUTSTR += ":apple:";
+           OUTPUTSTR += " HAS ERRORS:";
            OUTPUTSTR += "\r\n";
-           OUTPUTSTR += "TESTS / SKIPPED / FAILED / ERRORS";
-           OUTPUTSTR += "\r\n";
-           OUTPUTSTR += content.elements[0].attributes.tests; 
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.skipped;
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.failures;
-           OUTPUTSTR += " / ";
-           OUTPUTSTR += content.elements[0].attributes.errors;
-           OUTPUTSTR += "\r\n";
+
+           //begin test case details
+           const testcases = content.elements[0].elements;
+           testcases.forEach(function (item) {
+           if (item.name == "testcase") {
+             var testCaseNameResult = item.attributes.name;
+             testCaseNameResult += getTestCaseResult(item);
+             if (testCaseNameResult.includes('skipped')){
+                testCaseNameResult = ':pineapple: ' + testCaseNameResult;
+              }
+             else if (testCaseNameResult.includes('failure')){
+                testCaseNameResult = ':apple: ' + testCaseNameResult + ' ' 
+                  + item.elements[0].attributes.message;
+              }
+             else {
+                testCaseNameResult = ':green_apple: ' + testCaseNameResult;
+              }
+             testCaseNameResult = "    " + testCaseNameResult;
+             testCaseNameResult += "\r\n";
+             OUTPUTSTR += testCaseNameResult;
+            }
+    });
            slackBot(OUTPUTSTR);
         }
       }
@@ -85,24 +99,29 @@ try {
     });
   });
 
+  //function for interpret xml test case:
+  function getTestCaseResult(inXML) {
+    var outStr = '';
+    inXML.elements.forEach(function (result) {
+      outStr += ' ';
+      outStr += result.name;
+    });
+    return outStr;
+  }
+
   //function for send text to slack: 
   function slackBot(inString) {
     console.log("Sending to Slack: ");
     console.log("===============================================================");
     console.log(inString);
     console.log("===============================================================");
-  (async () => {
-    // See: https://api.slack.com/methods/chat.postMessage
-    const res = await web.chat.postMessage({ channel: slackChannelId, text: inString });
-    // `res` contains information about the posted message
-    return ('Message sent: ', res.ts);
-  })();
-
+    (async () => {
+      // See: https://api.slack.com/methods/chat.postMessage
+      const res = await web.chat.postMessage({ channel: slackChannelId, text: inString });
+      // `res` contains information about the posted message
+      return ('Message sent: ', res.ts);
+    })();
   }
-
-
-
-
 
   // Get the JSON webhook payload for the event that triggered the workflow:
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
