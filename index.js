@@ -32,7 +32,9 @@ try {
 
   //read file system and handle data:
   console.log('reading contents of test directory... ');
-  //TEST ONLY:  fs.readdir(tempdirnameString, function (err, data) {
+  //TEST ONLY:  
+  //fs.readdir(tempdirnameString, function (err, data) {
+  //PROD ONLY:
   fs.readdir(testDir, function (err, data) {
     //error handling or lack of it:        
     if (err) throw err;
@@ -45,7 +47,9 @@ try {
       if (fileName.includes('TEST')) {
         //grab file and populate content to JS object:
         var convert = require('xml-js');
-        //TEST ONLY:  var xml = require('fs').readFileSync(tempdirnameString + '/' + fileName, 'utf8'); 
+        //TEST ONLY:  
+        //var xml = require('fs').readFileSync(tempdirnameString + '/' + fileName, 'utf8'); 
+        //PROD ONLY:
         var xml = require('fs').readFileSync(testDir + '/' + fileName, 'utf8');
         var options = {ignoreComment: true, alwaysChildren: true};
         var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
@@ -81,8 +85,10 @@ try {
                 testCaseNameResult = ':pineapple: ' + testCaseNameResult;
               }
              else if (testCaseNameResult.includes('failure')){
+               var errorMessage = item.elements[0].attributes.message;
+               var shortMessage = errorMessage.split(/\r?\n/)[0];
                 testCaseNameResult = ':apple: ' + testCaseNameResult + ' ' 
-                  + item.elements[0].attributes.message;
+                  + shortMessage;
               }
              else {
                 testCaseNameResult = ':green_apple: ' + testCaseNameResult;
