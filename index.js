@@ -41,7 +41,7 @@ try {
     console.log("Found files: ");
     console.log(data);
 
-    let FINALSTR = 'Hello ${nameToGreet}!' + "\r\n";
+    let FINALSTR = "Hello " + nameToGreet + "!" + "\r\n";
 
     let promise = new Promise(function(resolve,reject) {
       FINALSTR += parseData(data);
