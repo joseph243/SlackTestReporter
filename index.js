@@ -114,6 +114,7 @@ try {
                 testCaseNameResult = ':green_apple: ' + testCaseNameResult;
               }
               testCaseNameResult = "    " + testCaseNameResult;
+              testCaseNameResult += "\r\n";
               OUTPUTSTR += testCaseNameResult;
             }
     });
